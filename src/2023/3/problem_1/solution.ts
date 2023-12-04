@@ -1,5 +1,5 @@
 import { getFileContents } from '@/utils/getFileContents';
-import { check } from 'prettier';
+import { isNumber } from '@/utils/isNumber';
 
 const file = getFileContents();
 let lastLine: Buffer | false;
@@ -19,7 +19,7 @@ function checkLine({
   let foundNumber = '';
   for (let x = 0; x <= midLine?.length; x++) {
     // find special characters to trigger number check
-    if (midLine[x] === '.' || Number.isNaN(parseInt(midLine[x], 10))) {
+    if (midLine[x] === '.' || !isNumber(midLine[x])) {
       // we found a special character, check if we have a number
       if (foundNumber) {
         // we have a number, work out the indexes to check for surrounding special characters
@@ -30,12 +30,8 @@ function checkLine({
         // search top and bottom rows for valid numbers
         for (let y = minIdx; y <= maxIdx; y++) {
           if (
-            (lastLine &&
-              lastLine[y] !== '.' &&
-              Number.isNaN(parseInt(lastLine[y], 10))) ||
-            (topLine &&
-              topLine[y] !== '.' &&
-              Number.isNaN(parseInt(topLine[y], 10)))
+            (lastLine && lastLine[y] !== '.' && !isNumber(lastLine[y])) ||
+            (topLine && topLine[y] !== '.' && !isNumber(topLine[y]))
           ) {
             // we found a special character that isn't a period, valid part number.
             validNumbers += parseInt(foundNumber, 10);
@@ -48,10 +44,8 @@ function checkLine({
         // if we still have foundNumber, check the midLine, as top and bottom did not match
         if (foundNumber) {
           if (
-            (midLine[minIdx] !== '.' &&
-              Number.isNaN(parseInt(midLine[minIdx], 10))) ||
-            (midLine[maxIdx] !== '.' &&
-              Number.isNaN(parseInt(midLine[maxIdx], 10)))
+            (midLine[minIdx] !== '.' && !isNumber(midLine[minIdx])) ||
+            (midLine[maxIdx] !== '.' && !isNumber(midLine[maxIdx]))
           ) {
             // we found a special character that isn't a period, valid part number.
             validNumbers += parseInt(foundNumber, 10);
