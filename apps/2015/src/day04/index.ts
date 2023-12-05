@@ -25,7 +25,7 @@ const part2 = (rawInput: string) => {
 
 	for (const line of input) {
 		let md5Hash = ''
-		let i = 0
+		let i = 117946 // we know it's at least this from
 		while (!md5Hash.startsWith('000000')) {
 			md5Hash = Md5.hashStr(`${line}${++i}`)
 		}
