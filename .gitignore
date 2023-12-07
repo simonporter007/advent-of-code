@@ -78,5 +78,5 @@ newBuildCache
 
 dist
 .npmrc
-input
+input.txt
 problem.md
