@@ -32,7 +32,7 @@ async function readme({ year }: { year: number }) {
     return
   }
 
-  console.log(chalk.green.bold(`Updating readme for the year...`))
+  console.log(chalk.green.bold(`Updating readme for the year ${year}...`))
   const yearTemplate = await generateYearReadmeTemplate({ year: year as Year })
 
   const filePath = join(PROJECT_ROOT, 'src', year.toString(), 'README.md')
