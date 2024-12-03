@@ -1,11 +1,11 @@
-import type { Day, Year } from "@/types/types";
+import type { Day, Year } from '@/types/types'
 
 export function generateDayTemplate({
   dayName,
   year,
 }: {
-  year: Year;
-  dayName: Day;
+  year: Year
+  dayName: Day
 }) {
   return `import { parseLines, readInput } from '@/utils/file-io'
 //import { join } from "node:path";
@@ -34,15 +34,15 @@ if (Bun.env.debug === "true") {
   }
   debug();
 }
-`;
+`
 }
 
 export function generateDayTestTemplate({
   dayName,
   year,
 }: {
-  year: Year;
-  dayName: Day;
+  year: Year
+  dayName: Day
 }) {
   return `import { join } from "node:path";
 import { describe, expect, test } from "vitest";
@@ -70,5 +70,5 @@ describe("${year}/${dayName} >", async () => {
   });
 })
 
-`;
+`
 }

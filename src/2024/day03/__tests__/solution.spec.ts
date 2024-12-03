@@ -1,25 +1,25 @@
 import { join } from 'node:path'
 import { describe, expect, test } from 'vitest'
-import { part1, part2 } from '@/2023/day01/solution'
+import { part1, part2 } from '@/2024/day03/solution'
 import { MOCKS_DIR } from '@/constants'
 import { readInput } from '@/utils/file-io'
 
-describe('2023/day01 >', async () => {
+describe('2024/day03 >', async () => {
   test('part1 > example', async () => {
     const input = await readInput({
-      day: 'day01',
+      day: 'day03',
       inputFilePath: join(MOCKS_DIR, 'input.part1.example.txt'),
-      year: 2023,
+      year: 2024,
     })
-    expect(part1(input)).toEqual(142)
+    expect(part1(input)).toEqual(161)
   })
 
   test('part2 > example', async () => {
     const input = await readInput({
-      day: 'day01',
+      day: 'day03',
       inputFilePath: join(MOCKS_DIR, 'input.part2.example.txt'),
-      year: 2023,
+      year: 2024,
     })
-    expect(part2(input)).toEqual(281)
+    expect(part2(input)).toEqual(48)
   })
 })

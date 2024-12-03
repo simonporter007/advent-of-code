@@ -1,77 +1,76 @@
-import { join } from "node:path";
-import { MOCKS_DIR } from "@/constants";
-import { parseLines, readInput } from "@/utils/file-io";
+import { join } from 'node:path'
+import { MOCKS_DIR } from '@/constants'
+import { parseLines, readInput } from '@/utils/file-io'
 
 export type MappingsType = {
-  [key: string]: SeedMap[];
-};
+  [key: string]: SeedMap[]
+}
 export type SeedType = {
-  sourceStart: number;
-  sourceEnd: number;
-  length: number;
-};
+  sourceStart: number
+  sourceEnd: number
+  length: number
+}
 export type SeedMap = {
-  destinationStart: number;
-  destinationEnd: number;
-} & SeedType;
+  destinationStart: number
+  destinationEnd: number
+} & SeedType
 
 function getSeedMappings({ input }: { input: string[] }) {
-  const mappings: Record<string, SeedMap[]> = {};
-  let currentLookup = "";
+  const mappings: Record<string, SeedMap[]> = {}
+  let currentLookup = ''
 
   for (const line of input) {
-    const mapTypeMatch = line.match(/^(?<typeOfMap>[a-z-]+)/)?.groups
-      ?.typeOfMap;
+    const mapTypeMatch = line.match(/^(?<typeOfMap>[a-z-]+)/)?.groups?.typeOfMap
     if (mapTypeMatch) {
       // starts with a letter, must be a map list
-      currentLookup = mapTypeMatch;
-      mappings[currentLookup] = [];
+      currentLookup = mapTypeMatch
+      mappings[currentLookup] = []
     } else {
       // otherwise must be a row of ids to parse for the current lookup
-      const [destination, source, length] = line.split(/\s+/);
+      const [destination, source, length] = line.split(/\s+/)
       mappings[currentLookup].push({
         destinationEnd: parseInt(destination, 10) + parseInt(length, 10) - 1,
         destinationStart: parseInt(destination, 10),
         length: parseInt(length, 10),
         sourceEnd: parseInt(source, 10) + parseInt(length, 10) - 1,
         sourceStart: parseInt(source, 10),
-      });
+      })
     }
   }
 
-  return mappings;
+  return mappings
 }
 
 export function part1(input: string) {
-  const lines = parseLines(input);
+  const lines = parseLines(input)
   const seeds = lines
     .filter(Boolean)
     .shift()
-    ?.replace("seeds: ", "")
-    .split(" ")
-    .map((seed) => parseInt(seed, 10));
+    ?.replace('seeds: ', '')
+    .split(' ')
+    .map((seed) => parseInt(seed, 10))
   const mappings: {
-    [key: string]: SeedMap[];
-  } = getSeedMappings({ input: lines });
+    [key: string]: SeedMap[]
+  } = getSeedMappings({ input: lines })
 
   const seedLocations = seeds?.map((seed) => {
     // start looking up the seed in almanac
-    let currMappedId = seed;
+    let currMappedId = seed
     Object.values(mappings).forEach((maps) => {
       for (const map of maps) {
         // if the given seed number fits within source range, find linked source number for next lookups
         if (currMappedId >= map.sourceStart && currMappedId <= map.sourceEnd) {
           currMappedId =
-            (map.destinationStart || 0) + (currMappedId - map.sourceStart);
-          break;
+            (map.destinationStart || 0) + (currMappedId - map.sourceStart)
+          break
         }
       }
-    });
-    return currMappedId;
-  });
+    })
+    return currMappedId
+  })
 
   // find the lowest location to return
-  return seedLocations?.sort()?.shift();
+  return seedLocations?.sort()?.shift()
 }
 
 // export function part2(input: string) {
@@ -191,79 +190,78 @@ export function part1(input: string) {
 // }
 
 type SeedRangeType = {
-  seedRangeStart: number;
-  seedRangeEnd: number;
-};
+  seedRangeStart: number
+  seedRangeEnd: number
+}
 
 export function part2(input: string) {
-  const lines = parseLines(input).filter((line) => Boolean(line));
+  const lines = parseLines(input).filter((line) => Boolean(line))
   const seedRanges = lines
     .shift()
-    ?.replace("seeds: ", "")
-    .split(" ")
+    ?.replace('seeds: ', '')
+    .split(' ')
     .map((seed, idx, seeds) => {
       if (idx % 2 === 0) {
         return {
           seedRangeEnd: parseInt(seed, 10) + parseInt(seeds[idx + 1], 10) - 1,
           seedRangeStart: parseInt(seed, 10),
-        };
+        }
       }
     })
-    .filter((seed): seed is SeedRangeType => Boolean(seed));
+    .filter((seed): seed is SeedRangeType => Boolean(seed))
 
-  if (!seedRanges) throw new Error("broken input filtering logic!");
+  if (!seedRanges) throw new Error('broken input filtering logic!')
 
   // Next we generate the mappings from the almanac with ranges too (source + destination start and end)
-  const mappings: Record<string, SeedMap[]> = {};
-  let currentLookup = "";
+  const mappings: Record<string, SeedMap[]> = {}
+  let currentLookup = ''
 
   for (const line of lines) {
-    const mapTypeMatch = line.match(/^(?<typeOfMap>[a-z-]+)/)?.groups
-      ?.typeOfMap;
+    const mapTypeMatch = line.match(/^(?<typeOfMap>[a-z-]+)/)?.groups?.typeOfMap
     if (mapTypeMatch) {
       // starts with a letter, must be a map list
-      currentLookup = mapTypeMatch;
-      mappings[currentLookup] = [];
+      currentLookup = mapTypeMatch
+      mappings[currentLookup] = []
     } else {
       // otherwise must be a row of ids to parse for the current lookup
-      const [destination, source, length] = line.split(/\s+/);
+      const [destination, source, length] = line.split(/\s+/)
       mappings[currentLookup].push({
         destinationEnd: parseInt(destination, 10) + parseInt(length, 10) - 1,
         destinationStart: parseInt(destination, 10),
         length: parseInt(length, 10),
         sourceEnd: parseInt(source, 10) + parseInt(length, 10) - 1,
         sourceStart: parseInt(source, 10),
-      });
+      })
     }
   }
 
-  const candidateSeeds: number[] = [];
-  const mappingsMap = Object.values(mappings);
+  const candidateSeeds: number[] = []
+  const mappingsMap = Object.values(mappings)
 
   // Start with each mapping's destination ranges
   while (mappingsMap.length > 0) {
-    const seeds = mappingsMap.pop();
-    const seedNum: number | undefined = undefined;
+    const seeds = mappingsMap.pop()
+    const seedNum: number | undefined = undefined
     for (let i = 0; i < seeds?.length; i++) {
-      const seed = seeds[i];
-      let seedNum = seed.sourceStart;
+      const seed = seeds[i]
+      let seedNum = seed.sourceStart
       Object.values(mappings)
         ?.reverse()
         ?.forEach((maps) => {
           // within each map (e.g. location-to-humidity) search for a location match (destination)
           for (const map of maps) {
             const isInRange =
-              seedNum >= map.destinationStart && seedNum <= map.destinationEnd;
+              seedNum >= map.destinationStart && seedNum <= map.destinationEnd
 
             // if it's not in range, skip to next possible map within same map type
-            if (!isInRange) continue;
+            if (!isInRange) continue
 
             // otherwise we've found a match, work the seed backwards by adding the offset (diff between start and destination)
             // break out to move to next map type
-            seedNum = seedNum + (map.sourceStart - map.destinationStart);
-            break;
+            seedNum = seedNum + (map.sourceStart - map.destinationStart)
+            break
           }
-        });
+        })
     }
 
     // Check the seed ranges to see if the location > seed exists, first match is therefore lowest location possible
@@ -272,25 +270,25 @@ export function part2(input: string) {
         (map) => seedNum >= map.seedRangeStart && seedNum <= map.seedRangeEnd,
       )
     ) {
-      candidateSeeds.push(seedNum);
+      candidateSeeds.push(seedNum)
     }
   }
 
-  const lowestLocation = 0;
+  const lowestLocation = 0
 
-  return lowestLocation;
+  return lowestLocation
 }
 
-if (Bun.env.debug === "true") {
+if (Bun.env.debug === 'true') {
   async function debug() {
     const input = await readInput({
-      day: "day05",
-      inputFilePath: join(MOCKS_DIR, "input.part2.example.txt"),
+      day: 'day05',
+      inputFilePath: join(MOCKS_DIR, 'input.part2.example.txt'),
       year: 2023,
-    });
+    })
 
     // part1(input);
-    part2(input);
+    part2(input)
   }
-  debug();
+  debug()
 }
