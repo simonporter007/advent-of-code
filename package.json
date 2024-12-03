@@ -2,6 +2,7 @@
   "scripts": {
     "aoc:setup": "bun scripts/setup.ts",
     "aoc:init": "bun scripts/init.ts",
+    "aoc:readme": "bun scripts/readme.ts",
     "aoc:run": "bun scripts/run.ts",
     "aoc:run:dev": "bun scripts/run.ts --dev",
     "test": "bun test",
