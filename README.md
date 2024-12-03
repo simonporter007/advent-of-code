@@ -3,6 +3,9 @@
 
 # 🎄 Advent of Code 🎄
 
+[![2023](https://badgen.net/badge/AOC/2023/blue)](./src/2023)
+[![2024](https://badgen.net/badge/AOC/2024/blue)](./src/2024)
+
 ## Installation
 
 ```
