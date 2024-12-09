@@ -3,8 +3,9 @@ import { join } from 'node:path'
 import { PROJECT_ROOT } from '@/constants'
 import type { Day, Year } from '@/types/types'
 
-export function parseLines(rawInput: string) {
-  return rawInput?.trim()?.split('\n')
+export function parseLines(rawInput: string, sep?: string) {
+  if (!sep) sep = '\n'
+  return rawInput?.trim()?.split(sep)
 }
 
 export async function readInput({
