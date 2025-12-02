@@ -5,6 +5,7 @@
 
 [![2023](https://badgen.net/badge/AOC/2023/blue)](./src/2023)
 [![2024](https://badgen.net/badge/AOC/2024/blue)](./src/2024)
+[![2025](https://badgen.net/badge/AOC/2024/blue)](./src/2025)
 
 ## Installation
 
@@ -54,6 +55,7 @@ Example:
 bun aoc:run:dev 2                   // run day 2 solutions for the current year
 bun aoc:run:dev --year 2023 2       // run day 2 solutions for the year 2023
 bun aoc:run:dev 2 --performance     // run day 2 solutions for the current year to calculate performance, 50 runs avg.
+bun aoc:run:dev -p                  // run the current day solutions for the current year to calculate performance, 50 runs avg.
 ```
 
 ## Running tests

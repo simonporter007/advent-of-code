@@ -11,8 +11,8 @@ export function generateDayTemplate({
   dayName: Day
 }) {
   return `import { parseLines, readInput } from '@/utils/file-io'
-//import { join } from "node:path";
-//import { MOCKS_DIR } from "@/constants";
+//import { join } from 'node:path';
+//import { MOCKS_DIR } from '@/constants';
 
 export function part1(input: string) {
   const lines = parseLines(input)
@@ -24,12 +24,12 @@ export function part2(input: string) {
   // your code goes here
 }
 
-if (Bun.env.debug === "true") {
+if (Bun.env.debug === 'true') {
   async function debug() {
     const input = await readInput({
-      day: "${dayName}",
-      //inputFilePath: join(MOCKS_DIR, "input.part1.example.txt"),
-      //inputFilePath: join(MOCKS_DIR, "input.part2.example.txt"),
+      day: '${dayName}',
+      //inputFilePath: join(MOCKS_DIR, 'input.part1.example.txt'),
+      //inputFilePath: join(MOCKS_DIR, 'input.part2.example.txt'),
       year: ${year},
     });
     part1(input);
@@ -47,26 +47,26 @@ export function generateDayTestTemplate({
   year: Year
   dayName: Day
 }) {
-  return `import { join } from "node:path";
-import { describe, expect, test } from "vitest";
-import { part1, part2 } from "@/${year}/${dayName}/solution";
-import { MOCKS_DIR } from "@/constants";
-import { readInput } from "@/utils/file-io";
+  return `import { join } from 'node:path';
+import { describe, expect, test } from 'vitest';
+import { part1, part2 } from '@/${year}/${dayName}/solution';
+import { MOCKS_DIR } from '@/constants';
+import { readInput } from '@/utils/file-io';
 
-describe("${year}/${dayName} >", async () => {
-  test("part1 > example", async () => {
+describe('${year}/${dayName} >', async () => {
+  test('part1 > example', async () => {
     const input = await readInput({
-      day: "${dayName}",
-      inputFilePath: join(MOCKS_DIR, "input.part1.example.txt"),
+      day: '${dayName}',
+      inputFilePath: join(MOCKS_DIR, 'input.part1.example.txt'),
       year: ${year},
     });
     expect(part1(input)).toEqual(/* answer goes here */);
   });
 
-  test("part2 > example", async () => {
+  test('part2 > example', async () => {
     const input = await readInput({
-      day: "${dayName}",
-      inputFilePath: join(MOCKS_DIR, "input.part2.example.txt"),
+      day: '${dayName}',
+      inputFilePath: join(MOCKS_DIR, 'input.part2.example.txt'),
       year: ${year},
     });
     expect(part2(input)).toEqual(/* answer goes here */);
