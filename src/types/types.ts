@@ -25,7 +25,17 @@ export type Day =
   | 'day24'
   | 'day25'
 
-export type Year = 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2023 | 2024
+export type Year =
+  | 2015
+  | 2016
+  | 2017
+  | 2018
+  | 2019
+  | 2020
+  | 2021
+  | 2023
+  | 2024
+  | 2025
 
 export type PartStats = {
   attempts: unknown[]
