@@ -25,8 +25,8 @@ const { positionals, values: opts } = parseArgs({
       type: 'boolean',
     },
     performance: {
-      short: "p",
       default: false,
+      short: 'p',
       type: 'boolean',
     },
     runs: {
