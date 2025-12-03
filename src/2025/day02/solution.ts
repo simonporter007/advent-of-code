@@ -43,6 +43,7 @@ export function part1(input: string) {
   return total
 }
 
+const regexAllSameDigits = new RegExp(/^(\d+)\1+$/)
 export function part2(input: string) {
   const lines = parseLines(input)
   const matches = lines[0].matchAll(/(\d+)-(\d+)/g)
@@ -58,7 +59,7 @@ export function part2(input: string) {
       const strNum = nextNum.toString()
 
       // all digits the same OR repeated groups of digits
-      if (strNum.match(/^(\d+)\1+$/)) {
+      if (regexAllSameDigits.exec(strNum)) {
         total += nextNum
       }
     }
